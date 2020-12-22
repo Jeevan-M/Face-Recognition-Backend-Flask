@@ -9,6 +9,11 @@ CORS(app)
 endPointApi = Api(app)
 
 
+@app.route('/')
+def index():
+    return 'Face Recognition Attendance System!'
+
+
 endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
 
