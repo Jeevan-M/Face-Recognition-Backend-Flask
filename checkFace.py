@@ -28,7 +28,7 @@ class CheckUserFace(Resource):
         help='encoded data is required'
     )
 
-    def get(self):
+    def post(self):
         request_data = CheckUserFace.parser.parse_args()
         request_data['encode'] = list(map(float, request_data['encode']))
         encodeFace = np.array(request_data['encode'])
