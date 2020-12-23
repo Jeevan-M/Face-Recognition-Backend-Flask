@@ -30,6 +30,7 @@ class CheckUserFace(Resource):
 
     def post(self):
         request_data = CheckUserFace.parser.parse_args()
+        return {'value': request_data['encode']}
         request_data['encode'] = list(map(float, request_data['encode']))
         encodeFace = np.array(request_data['encode'])
         matches = fr.compare_faces(encodedImgList, encodeFace, tolerance=0.5)
