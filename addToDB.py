@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from pymongo import MongoClient
 from datetime import datetime, timedelta
-from extraFunction import TimeDiff, jsonDecoder
+from extraFunction import TimeDiff, jsonDecoder, filterData, checkTheUser
 import json
 
 # database connection
@@ -26,6 +26,8 @@ class UserToDB(Resource):
     def post(self, check):
         request_data = UserToDB.parser.parse_args()
         Name = request_data['Name']
+        if not checkTheUser(Name):
+            return {'Message': f'{Name} is not exist in json file'}, 400
         Time = datetime.now().strftime("%H:%M:%S %p")
         Date = datetime.now().strftime("%d-%m-%Y")
         checkdata = list(records.find({'Name': Name, 'Date': Date}))
@@ -52,8 +54,7 @@ class UserToDB(Resource):
                 }
                 records.update_one(
                     {"Name": Name, 'Date': Date}, {"$set": datas})
-            # print("Database Inserted ...")
-            return {'Message': "Database Inserted ..."}
+            return filterData(list(records.find({'Name': Name, 'Date': Date}))[0]), 201
         elif check == 'checkOut' and checkdata != []:
             if checkdata[0]['Check_out_Time'] == "":
                 b = []
@@ -85,5 +86,6 @@ class UserToDB(Resource):
                 }
                 records.update_one(
                     {"Name": Name, 'Date': Date}, {"$set": data})
-            # print("Database Updated ...")
-            return {'Message': "Database Updated ..."}
+            return filterData(list(records.find({'Name': Name, 'Date': Date}))[0]), 201
+        else:
+            return {'Message': 'Wrong Request'}, 400
