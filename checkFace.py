@@ -6,17 +6,17 @@ import urllib.request
 
 
 # get the encodeing of the employee
-# with open('Face_Encoding_Data.json') as f:
-#     EncodeJsonData = json.load(f)
-#     personName = list(EncodeJsonData.keys())
-#     encodedImgList = list(EncodeJsonData.values())
+with open('Face_Encoding_Data.json') as f:
+    EncodeJsonData = json.load(f)
+    personName = list(EncodeJsonData.keys())
+    encodedImgList = list(EncodeJsonData.values())
 
 
 # get the encodeing of the employee using url
-url = 'http://sietface.000webhostapp.com/Face_Encoding_Data.json'
-EncodeJsonData = json.loads(urllib.request.urlopen(url).read().decode())
-personName = list(EncodeJsonData.keys())
-encodedImgList = list(EncodeJsonData.values())
+# url = 'http://sietface.000webhostapp.com/Face_Encoding_Data.json'
+# EncodeJsonData = json.loads(urllib.request.urlopen(url).read().decode())
+# personName = list(EncodeJsonData.keys())
+# encodedImgList = list(EncodeJsonData.values())
 
 
 class CheckUserFace(Resource):
@@ -30,7 +30,6 @@ class CheckUserFace(Resource):
 
     def post(self):
         request_data = CheckUserFace.parser.parse_args()
-        return {'value': request_data['encode']}
         request_data['encode'] = list(map(float, request_data['encode']))
         encodeFace = np.array(request_data['encode'])
         matches = fr.compare_faces(encodedImgList, encodeFace, tolerance=0.5)
