@@ -1,6 +1,6 @@
 from flask import Flask
 from addToDB import UserToDB
-from checkFace import CheckUserFace
+from checkFace import CheckUserFace, GetStaffName
 from flask_restful import Api
 from flask_cors import CORS
 import logging
@@ -20,6 +20,7 @@ def index():
 
 endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
+endPointApi.add_resource(GetStaffName, '/getName')
 
 
 if __name__ == "__main__":

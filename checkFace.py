@@ -40,3 +40,8 @@ class CheckUserFace(Resource):
             name = personName[matchIndex]
             return {'Name': name}, 200
         return {'Name': name}, 404
+
+
+class GetStaffName(Resource):
+    def get(self):
+        return {'staffName': personName}
