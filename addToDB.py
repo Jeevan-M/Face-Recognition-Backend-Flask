@@ -3,6 +3,8 @@ from pymongo import MongoClient
 from datetime import datetime, timedelta
 from extraFunction import TimeDiff, jsonDecoder, filterData, checkTheUser
 import json
+from pytz import timezone
+
 
 # database connection
 client = MongoClient(
@@ -28,8 +30,8 @@ class UserToDB(Resource):
         Name = request_data['Name']
         if not checkTheUser(Name):
             return {'Message': f'{Name} is not exist in json file'}, 400
-        Time = datetime.now().strftime("%H:%M:%S %p")
-        Date = datetime.now().strftime("%d-%m-%Y")
+        Time = datetime.now(timezone('Asia/Kolkata')).strftime("%H:%M:%S %p")
+        Date = datetime.now(timezone('Asia/Kolkata')).strftime("%d-%m-%Y")
         checkdata = list(records.find({'Name': Name, 'Date': Date}))
         if check == 'checkIn':
             if checkdata == []:
@@ -63,7 +65,8 @@ class UserToDB(Resource):
                 Start = str(Decoded_Start[0])
                 End = Time
                 b.append(Time)
-                time_diff_date = datetime.now().strftime("%Y %m %d")
+                time_diff_date = datetime.now(
+                    timezone('Asia/Kolkata')).strftime("%Y %m %d")
                 Working_Hours = TimeDiff(
                     Start, End, time_diff_date)
                 data = {
@@ -78,7 +81,8 @@ class UserToDB(Resource):
                 Decoded_End.append(str(Time))
                 Start = str(Decoded_Start[0])
                 End = str(Decoded_End[-1])
-                time_diff_date = datetime.now().strftime("%Y %m %d")
+                time_diff_date = datetime.now(
+                    timezone('Asia/Kolkata')).strftime("%Y %m %d")
                 Working_Hours = TimeDiff(Start, End, time_diff_date)
                 data = {
                     "Check_out_Time": json.dumps(Decoded_End),
