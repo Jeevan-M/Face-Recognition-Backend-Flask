@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from addToDB import UserToDB
+from addToDB import UserToDB, todayAttendance
 from checkFace import CheckUserFace, GetStaffName
 from flask_restful import Api
 from flask_cors import CORS
@@ -26,6 +26,7 @@ def page_not_found(e):
 endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
 endPointApi.add_resource(GetStaffName, '/getName')
+endPointApi.add_resource(todayAttendance, '/todayPresent')
 
 
 if __name__ == "__main__":

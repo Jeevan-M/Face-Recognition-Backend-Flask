@@ -93,3 +93,9 @@ class UserToDB(Resource):
             return filterData(list(records.find({'Name': Name, 'Date': Date}))[0]), 201
         else:
             return {'Message': 'Wrong Request'}, 400
+
+
+class todayAttendance(Resource):
+    def get(self):
+        return {'Today': [filterData(i) for i in list(records.find({'Date': datetime.now(
+            timezone('Asia/Kolkata')).strftime("%d-%m-%Y")}))]}
