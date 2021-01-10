@@ -16,7 +16,7 @@ from resources.extraFunction import addJWT
 
 app = Flask(__name__)
 load_dotenv()
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 CORS(app)
 jwt = JWTManager(app)  # /auth
 endPointApi = Api(app)
@@ -37,7 +37,8 @@ class Testtoken(Resource):
 
 @app.route('/createNewJWT')
 def createNewJWT():
-    token = create_access_token(app.config['SECRET_KEY'], fresh=True)
+    token = create_access_token(
+        identity=app.config['JWT_SECRET_KEY'], fresh=True)
     if addJWT(token):
         return {'token': token}
     return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
