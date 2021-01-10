@@ -48,6 +48,23 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 
+@jwt.unauthorized_loader
+def missing_token_callback(error):
+    return {
+        "description": "Request does not contain an access token.",
+        'error': 'authorization_required'
+    }, 401
+
+
+@jwt.invalid_token_loader
+# we have to keep the argument here, since it's passed in by the caller internally
+def invalid_token_callback(error):
+    return {
+        'message': 'Signature verification failed.',
+        'error': 'invalid_token'
+    }, 401
+
+
 endPointApi.add_resource(Testtoken, '/test')
 endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
