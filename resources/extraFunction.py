@@ -1,5 +1,10 @@
 import json
 from datetime import datetime
+import os
+from flask import jsonify, request
+import jwt
+from functools import wraps
+
 
 # gives the time differenc
 
@@ -35,12 +40,20 @@ def filterData(data):
         'Check_in_Time': jsonDecoder(data.get('Check_in_Time'))[-1],
         'Check_out_Time': jsonDecoder(data.get('Check_out_Time'))[-1] if data.get('Check_out_Time') else None,
         'Working_Hours': data.get('Working_Hours') if data.get('Working_Hours') else None
-
     }
 
 
 def checkTheUser(Name):
-    with open('Face_Encoding_Data.json') as f:
+    with open('Json/Face_Encoding_Data.json') as f:
         EncodeJsonData = json.load(f)
         personName = list(EncodeJsonData.keys())
     return True if Name in personName else False
+
+
+def addJWT(jwt):
+    jwtJSONFile = 'Json/JWT.json'
+    if os.path.isfile(jwtJSONFile):
+        os.remove(jwtJSONFile)
+    with open(jwtJSONFile, 'w') as outfile:
+        json.dump({'token': jwt}, outfile)
+        return True

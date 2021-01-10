@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from pymongo import MongoClient
 from datetime import datetime, timedelta
-from extraFunction import TimeDiff, jsonDecoder, filterData, checkTheUser
+from resources.extraFunction import TimeDiff, jsonDecoder, filterData, checkTheUser
 import json
 from pytz import timezone
 

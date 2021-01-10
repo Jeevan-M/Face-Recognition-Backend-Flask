@@ -6,3 +6,5 @@ face-recognition
 Flask-Cors
 gunicorn
 dnspython
+python-dotenv
+Flask-JWT-Extended
