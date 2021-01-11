@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 import numpy as np
 import face_recognition as fr
 import json
+from flask_jwt_extended import jwt_required
 
 # get the encodeing of the employee
 with open('Json/Face_Encoding_Data.json') as f:
@@ -34,6 +35,6 @@ class CheckUserFace(Resource):
 
 
 class GetStaffName(Resource):
-
+    @jwt_required
     def get(self):
         return {'staffName': personName}

@@ -15,6 +15,7 @@ from resources.extraFunction import addJWT
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'super-secret'
+app.config['PROPAGATE_EXCEPTIONS'] = True
 CORS(app)
 jwt = JWTManager(app)  # /auth
 endPointApi = Api(app)
@@ -56,7 +57,6 @@ def missing_token_callback(error):
 
 
 @jwt.invalid_token_loader
-# we have to keep the argument here, since it's passed in by the caller internally
 def invalid_token_callback(error):
     return {
         'message': 'Signature verification failed.',

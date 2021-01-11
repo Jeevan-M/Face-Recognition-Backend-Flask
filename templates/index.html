@@ -26,5 +26,18 @@
 <body>
     <div class="bg"></div>
 </body>
+<script>
+    let url1 = 'https://face-recognition-siet.herokuapp.com/test'
+    fetch(url1, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTAyNzQwNTIsIm5iZiI6MTYxMDI3NDA1MiwianRpIjoiMDBmMTVlNjAtMjAzNS00OTZkLWIyODUtNzIzMWFjOGM3NGEyIiwiZXhwIjoxNjEwMjc0OTUyLCJpZGVudGl0eSI6InN1cGVyLXNlY3JldCIsImZyZXNoIjp0cnVlLCJ0eXBlIjoiYWNjZXNzIn0.r1S4nPepQsVYH6xaMoe1epiv_DMzmRs_xqc6R3MrBcw'
+
+            }
+        })
+        .then(response => response.json())
+        .then(json => console.log(json))
+</script>
 
 </html>
