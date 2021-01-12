@@ -28,12 +28,6 @@ def index():
     return render_template('index.html')
 
 
-class Testtoken(Resource):
-    @jwt_required
-    def get(self):
-        return {'Name': 'Jeevan'}
-
-
 @app.route('/createNewJWT')
 def createNewJWT():
     token = create_access_token(
@@ -64,7 +58,6 @@ def invalid_token_callback(error):
     }, 401
 
 
-endPointApi.add_resource(Testtoken, '/test')
 endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
 endPointApi.add_resource(GetStaffName, '/getName')

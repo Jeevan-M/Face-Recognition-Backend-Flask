@@ -35,6 +35,6 @@ class CheckUserFace(Resource):
 
 
 class GetStaffName(Resource):
-    @jwt_required
+
     def get(self):
         return {'staffName': personName}
