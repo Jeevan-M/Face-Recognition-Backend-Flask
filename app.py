@@ -34,7 +34,7 @@ def createNewJWT():
         identity=app.config['JWT_SECRET_KEY'], fresh=True)
     if addJWT(token):
         return {'token': token}
-    return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+    return ('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
 @app.errorhandler(404)

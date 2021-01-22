@@ -21,6 +21,7 @@ class CheckUserFace(Resource):
     )
 
     def post(self):
+        imgLink = 'http://facesiet.byethost6.com/images/'
         request_data = CheckUserFace.parser.parse_args()
         request_data['encode'] = list(map(float, request_data['encode']))
         encodeFace = np.array(request_data['encode'])
@@ -30,7 +31,7 @@ class CheckUserFace(Resource):
         name = 'Unknow Person'
         if matches[matchIndex]:
             name = personName[matchIndex]
-            return {'Name': name, "img": f"images/{name}/{name}.jpg"}, 200
+            return {'Name': name, "img": f"{imgLink}{name}.jpg"}, 200
         return {'Name': name}, 404
 
 
