@@ -30,7 +30,7 @@ class CheckUserFace(Resource):
         name = 'Unknow Person'
         if matches[matchIndex]:
             name = personName[matchIndex]
-            return {'Name': name}, 200
+            return {'Name': name, "img": f"images/{name}/{name}.jpg"}, 200
         return {'Name': name}, 404
 
 
