@@ -21,7 +21,7 @@ class CheckUserFace(Resource):
     )
 
     def post(self):
-        imgLink = 'http://facesiet.byethost6.com/images/'
+        imgLink = 'https://raw.githubusercontent.com/Jeevan-M/staffImages/master/'
         request_data = CheckUserFace.parser.parse_args()
         request_data['encode'] = list(map(float, request_data['encode']))
         encodeFace = np.array(request_data['encode'])
