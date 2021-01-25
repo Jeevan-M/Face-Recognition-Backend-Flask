@@ -1,11 +1,9 @@
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 from flask import Flask, render_template
-from flask_restful import Api, Resource
+from flask_restful import Api
 from flask_cors import CORS
-import datetime
 import logging
 import sys
-import os
 
 
 from resources.addToDB import UserToDB, todayAttendance
