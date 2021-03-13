@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from pymongo import MongoClient
-from datetime import datetime, timedelta
+from datetime import datetime
 from resources.extraFunction import TimeDiff, jsonDecoder, filterData, checkTheUser
 import json
 from pytz import timezone
@@ -11,7 +11,6 @@ client = MongoClient(
     "mongodb+srv://ezhil55:ezhil55@cluster0.xaim7.mongodb.net/<dbname>?retryWrites=true&w=majority")
 # print("Client Connected ...")
 db = client.get_database("Ezhilarasi_5591")
-imgDB = db.Images
 records = db.Ezhil_5591
 # records = db.Ezhil_2_12_2020
 # print("Database Connected ...")

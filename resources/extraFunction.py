@@ -27,8 +27,6 @@ def jsonDecoder(data):
     value = jsonDec.decode(data)
     return value
 
-# return value
-
 
 def filterData(data):
     return {
@@ -54,3 +52,21 @@ def addJWT(jwt):
     with open(jwtJSONFile, 'w') as outfile:
         json.dump({'token': jwt}, outfile)
         return True
+
+
+def Object_To_Dict(Data):
+    new_data = []
+    for data in Data:
+        if data['Check_out_Time'] == "":
+            check_out_Time = ""
+        else:
+            check_out_Time = jsonDecoder(data['Check_out_Time'])[-1]
+        dict_data = {
+            "Name": data['Name'],
+            "Date": data['Date'],
+            "Status": data['Status'],
+            "Check_in_Time": jsonDecoder(data['Check_in_Time'])[0],
+            "Check_out_Time": check_out_Time,
+            "Working_Hours": data['Working_Hours']}
+        new_data.append(dict_data)
+    return new_data

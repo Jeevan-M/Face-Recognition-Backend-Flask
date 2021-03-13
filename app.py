@@ -4,11 +4,10 @@ from flask_restful import Api
 from flask_cors import CORS
 import logging
 import sys
-
-
 from resources.addToDB import UserToDB, todayAttendance
 from resources.checkFace import CheckUserFace, GetStaffName
 from resources.extraFunction import addJWT
+from resources.report import Report
 
 
 app = Flask(__name__)
@@ -60,6 +59,7 @@ endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
 endPointApi.add_resource(GetStaffName, '/getName')
 endPointApi.add_resource(todayAttendance, '/todayPresent')
+endPointApi.add_resource(Report, '/getReport')
 
 
 if __name__ == "__main__":
