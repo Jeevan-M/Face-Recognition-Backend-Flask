@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 import os
-
+import csv
 
 # gives the time differenc
 
@@ -70,3 +70,83 @@ def Object_To_Dict(Data):
             "Working_Hours": data['Working_Hours']}
         new_data.append(dict_data)
     return new_data
+
+
+def ConvertToCSV(csv_path, data):
+    if not (os.path.isfile(csv_path)):
+        with open(csv_path, 'w', newline='') as file:
+            csv.writer(file)
+    data_file = open(csv_path, 'w', newline="")
+    csv_writer = csv.writer(data_file)
+    count = 0
+    datas = Object_To_Dict(data)
+    for emp in datas:
+        if count == 0:
+            header = emp.keys()
+            headers = list(header)
+            csv_writer.writerow(headers)
+            count += 1
+        csv_writer.writerow(emp.values())
+    data_file.close()
+    return True
+
+
+def MailAttendance(file, toEmail):
+    import smtplib
+    import mimetypes
+    from email.mime.multipart import MIMEMultipart
+    from email import encoders
+    from email.message import Message
+    from email.mime.audio import MIMEAudio
+    from email.mime.base import MIMEBase
+    from email.mime.image import MIMEImage
+    from email.mime.text import MIMEText
+
+    emailfrom = "sietstaffattendance@gmail.com"
+    emailto = toEmail
+    fileToSend = file
+    username = "sietstaffattendance@gmail.com"
+    password = "siet@123staff"
+
+    msg = MIMEMultipart()
+    msg["From"] = emailfrom
+    msg["To"] = emailto
+    date = datetime.now().strftime("%d-%m-%Y")
+    msg["Subject"] = "Attendance Report "+str(date)
+    msg.preamble = "Attendance Report "+str(date)
+
+    ctype, encoding = mimetypes.guess_type(fileToSend)
+    if ctype is None or encoding is not None:
+        ctype = "application/octet-stream"
+
+    maintype, subtype = ctype.split("/", 1)
+
+    if maintype == "text":
+        fp = open(fileToSend)
+        # Note: we should handle calculating the charset
+        attachment = MIMEText(fp.read(), _subtype=subtype)
+        fp.close()
+    elif maintype == "image":
+        fp = open(fileToSend, "rb")
+        attachment = MIMEImage(fp.read(), _subtype=subtype)
+        fp.close()
+    elif maintype == "audio":
+        fp = open(fileToSend, "rb")
+        attachment = MIMEAudio(fp.read(), _subtype=subtype)
+        fp.close()
+    else:
+        fp = open(fileToSend, "rb")
+        attachment = MIMEBase(maintype, subtype)
+        attachment.set_payload(fp.read())
+        fp.close()
+        encoders.encode_base64(attachment)
+    attachment.add_header("Content-Disposition",
+                          "attachment", filename=fileToSend.split('/')[1])
+    msg.attach(attachment)
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(username, password)
+    server.sendmail(emailfrom, emailto, msg.as_string())
+    server.quit()
+    return True

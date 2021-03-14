@@ -1,0 +1,60 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+    <button onclick="getAPI()">Clock</button>
+    <a id="fileDownload" href="{{ url_for('.download_file') }}">Download</a>
+</body>
+<script>
+    function getAPI() {
+        // 
+        _data = {
+            "from": "01-03-2021",
+            "to": "10-03-2021"
+        }
+        fetch('http://127.0.0.1:5000/getReport', {
+            method: "POST",
+            body: JSON.stringify(_data),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(function(resp) {
+            return resp.blob();
+        }).then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.getElementById('fileDownload')
+            a.href = url;
+            a.download = "filename.csv";
+            // document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            // a.click();
+            // a.remove(); //afterwards we remove the element again   
+        });
+    }
+
+
+    // function getAPI() {
+    //     _data = {
+    //         "from": "01-03-2021",
+    //         "to": "10-03-2021"
+    //     }
+    //     fetch('http://127.0.0.1:5000/getReport', {
+    //             method: "POST",
+    //             body: JSON.stringify(_data),
+    //             headers: {
+    //                 "Content-type": "application/json; charset=UTF-8"
+    //             }
+    //         })
+    //         .then(response => response.json())
+    //         .then(json => console.log(json));
+
+    // }
+</script>
+
+</html>
