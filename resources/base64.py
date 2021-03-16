@@ -12,11 +12,12 @@ with open('Json/Face_Encoding_Data.json') as f:
     personName = list(EncodeJsonData.keys())
     encodedImgList = list(EncodeJsonData.values())
 
-class Base64:
+class Base64(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
         'encode',
         type=str,
+        required=True,
         help="Encoded data required"
     )
     def post(self):

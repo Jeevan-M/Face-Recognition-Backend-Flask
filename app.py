@@ -63,7 +63,7 @@ endPointApi.add_resource(GetStaffName, '/getName')
 endPointApi.add_resource(todayAttendance, '/todayPresent')
 endPointApi.add_resource(Report, '/getReport')
 endPointApi.add_resource(loginAdmin, '/login')
-endPointApi.add_resource(Base64, '/base64')
+endPointApi.add_resource(Base64, '/base')
 
 
 if __name__ == "__main__":
