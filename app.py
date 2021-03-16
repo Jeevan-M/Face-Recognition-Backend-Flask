@@ -8,6 +8,8 @@ from resources.addToDB import UserToDB, todayAttendance
 from resources.checkFace import CheckUserFace, GetStaffName
 from resources.extraFunction import addJWT
 from resources.report import Report
+from resources.login import loginAdmin
+from resources.base64 import Base64
 
 
 app = Flask(__name__)
@@ -60,6 +62,8 @@ endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
 endPointApi.add_resource(GetStaffName, '/getName')
 endPointApi.add_resource(todayAttendance, '/todayPresent')
 endPointApi.add_resource(Report, '/getReport')
+endPointApi.add_resource(loginAdmin, '/login')
+endPointApi.add_resource(Base64, '/base64')
 
 
 if __name__ == "__main__":
