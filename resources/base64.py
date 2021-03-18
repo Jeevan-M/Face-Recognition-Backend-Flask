@@ -24,9 +24,9 @@ class Base64(Resource):
         imgLink = 'https://raw.githubusercontent.com/Jeevan-M/staffImages/master/'
         req_data = Base64.parser.parse_args()
         base64Data = req_data['encode']
-        img_data = BytesIO(base64.b64decode(base64Data))
-        img = Image.open(img_data)
-        encodeFace = fr.load_image_file(img)
+        byte_data = base64.b64decode(base64Data)
+        image_data = BytesIO(byte_data)
+        encodeFace = fr.load_image_file(image_data)
         encodeFace = fr.face_encodings(encodeFace)[0]
         matches = fr.compare_faces(encodedImgList, encodeFace, tolerance=0.5)
         faceDist = fr.face_distance(encodedImgList, encodeFace)
