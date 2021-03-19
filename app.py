@@ -4,7 +4,8 @@ from flask_restful import Api
 from flask_cors import CORS
 import logging
 import sys
-from resources.addToDB import UserToDB, todayAttendance
+from resources.todayData import todayData
+from resources.addToDB import UserToDB
 from resources.checkFace import CheckUserFace, GetStaffName
 from resources.extraFunction import addJWT
 from resources.report import Report
@@ -60,7 +61,7 @@ def invalid_token_callback(error):
 endPointApi.add_resource(CheckUserFace, '/face')
 endPointApi.add_resource(UserToDB, '/saveUser/<string:check>')
 endPointApi.add_resource(GetStaffName, '/getName')
-endPointApi.add_resource(todayAttendance, '/todayPresent')
+endPointApi.add_resource(todayData, '/todayData')
 endPointApi.add_resource(Report, '/getReport')
 endPointApi.add_resource(loginAdmin, '/login')
 endPointApi.add_resource(Base64, '/base')

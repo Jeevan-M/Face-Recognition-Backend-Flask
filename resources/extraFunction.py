@@ -4,8 +4,6 @@ import os
 import csv
 
 # gives the time differenc
-
-
 def TimeDiff(Start, End, Date):
     date = Date.split()
     Start_time = Start.split()
@@ -19,9 +17,8 @@ def TimeDiff(Start, End, Date):
     working_hours = str(round(Time_Diff.seconds/3600, 3)) + " hrs"
     return working_hours
 
+
 # gives the json value
-
-
 def jsonDecoder(data):
     jsonDec = json.decoder.JSONDecoder()
     value = jsonDec.decode(data)
@@ -32,6 +29,7 @@ def filterData(data):
     return {
         'Name': data.get('Name'),
         'Date': data.get('Date'),
+        'Status':data.get('Status'),
         'Check_in_Time': jsonDecoder(data.get('Check_in_Time'))[-1],
         'Check_out_Time': jsonDecoder(data.get('Check_out_Time'))[-1] if data.get('Check_out_Time') else None,
         'Working_Hours': data.get('Working_Hours') if data.get('Working_Hours') else None
@@ -150,3 +148,9 @@ def MailAttendance(file, toEmail):
     server.sendmail(emailfrom, emailto, msg.as_string())
     server.quit()
     return True
+
+
+def accessJsonFile():
+    with open('Json/Face_Encoding_Data.json') as f:
+        EncodeJsonData = json.load(f)
+        return list(EncodeJsonData.keys()),list(EncodeJsonData.values())

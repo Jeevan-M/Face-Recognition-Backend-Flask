@@ -1,20 +1,10 @@
 from flask_restful import Resource, reqparse
-from pymongo import MongoClient
+from resources.dbConnect import connectDB
 from datetime import datetime
 from resources.extraFunction import TimeDiff, jsonDecoder, filterData, checkTheUser
 import json
 from pytz import timezone
-
-
-# database connection
-client = MongoClient(
-    "mongodb+srv://ezhil55:ezhil55@cluster0.xaim7.mongodb.net/<dbname>?retryWrites=true&w=majority")
-# print("Client Connected ...")
-db = client.get_database("Ezhilarasi_5591")
-records = db.Ezhil_5591
-# records = db.Ezhil_2_12_2020
-# print("Database Connected ...")
-
+records = connectDB()
 
 class UserToDB(Resource):
     parser = reqparse.RequestParser()
@@ -95,7 +85,4 @@ class UserToDB(Resource):
             return {'Message': 'Wrong Request'}, 400
 
 
-class todayAttendance(Resource):
-    def get(self):
-        return {'Today': [filterData(i) for i in list(records.find({'Date': datetime.now(
-            timezone('Asia/Kolkata')).strftime("%d-%m-%Y")}))]}
+

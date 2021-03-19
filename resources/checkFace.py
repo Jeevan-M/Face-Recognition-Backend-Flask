@@ -3,13 +3,8 @@ import numpy as np
 import face_recognition as fr
 import json
 from flask_jwt_extended import jwt_required
-
-# get the encodeing of the employee
-with open('Json/Face_Encoding_Data.json') as f:
-    EncodeJsonData = json.load(f)
-    personName = list(EncodeJsonData.keys())
-    encodedImgList = list(EncodeJsonData.values())
-
+from resources.extraFunction import accessJsonFile
+personName , encodedImgList = accessJsonFile()
 
 class CheckUserFace(Resource):
     parser = reqparse.RequestParser()
